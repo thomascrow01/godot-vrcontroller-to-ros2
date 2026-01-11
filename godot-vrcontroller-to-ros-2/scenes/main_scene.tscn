@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://7xpy6evjgmmv"]
+[gd_scene load_steps=11 format=3 uid="uid://7xpy6evjgmmv"]
 
 [ext_resource type="Script" uid="uid://ck6grtv5cm3px" path="res://scripts/world.gd" id="1_w2twt"]
+[ext_resource type="Script" uid="uid://dhurx2kdxkses" path="res://scripts/controller_collection.gd" id="2_pw63i"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w2twt"]
 
@@ -14,6 +15,22 @@ sky = SubResource("Sky_pw63i")
 [sub_resource type="TextMesh" id="TextMesh_w2twt"]
 text = "Left hand"
 font_size = 5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pw63i"]
+shading_mode = 0
+
+[sub_resource type="TextMesh" id="TextMesh_7ykc4"]
+material = SubResource("StandardMaterial3D_pw63i")
+text = "Position"
+font_size = 1
+depth = 0.0
+
+[sub_resource type="TextMesh" id="TextMesh_pu3yx"]
+material = SubResource("StandardMaterial3D_pw63i")
+text = "Rotation
+"
+font_size = 1
+depth = 0.0
 
 [sub_resource type="TextMesh" id="TextMesh_pw63i"]
 text = "Right hand"
@@ -37,14 +54,36 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 [node name="LeftHand" type="XRController3D" parent="XROrigin3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -0.5)
 tracker = &"left_hand"
+script = ExtResource("2_pw63i")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftHand"]
 mesh = SubResource("TextMesh_w2twt")
 
-[node name="RightHand" type="XRController3D" parent="XROrigin3D"]
+[node name="PositionText" type="MeshInstance3D" parent="XROrigin3D/LeftHand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06872773, 0)
+mesh = SubResource("TextMesh_7ykc4")
+
+[node name="RotationText" type="MeshInstance3D" parent="XROrigin3D/LeftHand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05556023, 0)
+mesh = SubResource("TextMesh_pu3yx")
+
+[node name="RightHand" type="XRController3D" parent="XROrigin3D" node_paths=PackedStringArray("position_text", "rotation_text")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -0.5)
 tracker = &"right_hand"
+script = ExtResource("2_pw63i")
+position_text = NodePath("PositionText")
+rotation_text = NodePath("RotationText")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="XROrigin3D/RightHand"]
 mesh = SubResource("TextMesh_pw63i")
+skeleton = NodePath("../../LeftHand")
+
+[node name="PositionText" type="MeshInstance3D" parent="XROrigin3D/RightHand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.07901561, 0)
+mesh = SubResource("TextMesh_7ykc4")
+skeleton = NodePath("../../LeftHand")
+
+[node name="RotationText" type="MeshInstance3D" parent="XROrigin3D/RightHand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06069219, 0)
+mesh = SubResource("TextMesh_pu3yx")
 skeleton = NodePath("../../LeftHand")
