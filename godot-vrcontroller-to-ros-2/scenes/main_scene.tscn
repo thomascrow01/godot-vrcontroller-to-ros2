@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://7xpy6evjgmmv"]
+
+[ext_resource type="Script" uid="uid://ck6grtv5cm3px" path="res://scripts/world.gd" id="1_w2twt"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w2twt"]
+
+[sub_resource type="Sky" id="Sky_pw63i"]
+sky_material = SubResource("ProceduralSkyMaterial_w2twt")
+
+[sub_resource type="Environment" id="Environment_7ykc4"]
+background_mode = 2
+sky = SubResource("Sky_pw63i")
+
+[sub_resource type="TextMesh" id="TextMesh_w2twt"]
+text = "Left hand"
+font_size = 5
+
+[sub_resource type="TextMesh" id="TextMesh_pw63i"]
+text = "Right hand"
+font_size = 5
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_w2twt")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7ykc4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.9708589, 0.23499723, 0.047004003, 0, -0.19613443, 0.98057705, 0.23965198, -0.9520019, -0.19041885, -0.532321, 0, 0)
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+current = true
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="LeftHand" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -0.5)
+tracker = &"left_hand"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftHand"]
+mesh = SubResource("TextMesh_w2twt")
+
+[node name="RightHand" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -0.5)
+tracker = &"right_hand"
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="XROrigin3D/RightHand"]
+mesh = SubResource("TextMesh_pw63i")
+skeleton = NodePath("../../LeftHand")
