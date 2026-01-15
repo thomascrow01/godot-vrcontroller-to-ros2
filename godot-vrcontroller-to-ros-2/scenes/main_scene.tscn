@@ -1,7 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://7xpy6evjgmmv"]
+[gd_scene load_steps=15 format=3 uid="uid://7xpy6evjgmmv"]
 
 [ext_resource type="Script" uid="uid://ck6grtv5cm3px" path="res://scripts/world.gd" id="1_w2twt"]
 [ext_resource type="Script" uid="uid://dhurx2kdxkses" path="res://scripts/controller_collection.gd" id="2_pw63i"]
+[ext_resource type="PackedScene" uid="uid://blfitosl1gxbw" path="res://scenes/floating_ui.tscn" id="3_7ykc4"]
+[ext_resource type="Script" uid="uid://bliy04wn2fstv" path="res://scripts/websocket_manager.gd" id="5_gubc5"]
+[ext_resource type="Script" uid="uid://b3mvuc63alvl6" path="res://scripts/ip_ui.gd" id="6_rt2n2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w2twt"]
 
@@ -36,6 +39,9 @@ depth = 0.0
 text = "Right hand"
 font_size = 5
 
+[sub_resource type="QuadMesh" id="QuadMesh_rt2n2"]
+size = Vector2(0.1, 0.1)
+
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_w2twt")
 
@@ -55,6 +61,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -0.5)
 tracker = &"left_hand"
 script = ExtResource("2_pw63i")
+disabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftHand"]
 mesh = SubResource("TextMesh_w2twt")
@@ -87,3 +94,24 @@ skeleton = NodePath("../../LeftHand")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06069219, 0)
 mesh = SubResource("TextMesh_pu3yx")
 skeleton = NodePath("../../LeftHand")
+
+[node name="Node" type="Node" parent="XROrigin3D"]
+script = ExtResource("5_gubc5")
+
+[node name="OpenXRCompositionLayerQuad" type="OpenXRCompositionLayerQuad" parent="XROrigin3D" node_paths=PackedStringArray("layer_viewport", "controller")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.932)
+layer_viewport = NodePath("SubViewport")
+alpha_blend = true
+script = ExtResource("6_rt2n2")
+controller = NodePath("../RightHand")
+
+[node name="SubViewport" type="SubViewport" parent="XROrigin3D/OpenXRCompositionLayerQuad"]
+disable_3d = true
+own_world_3d = true
+transparent_bg = true
+render_target_update_mode = 4
+
+[node name="Control" parent="XROrigin3D/OpenXRCompositionLayerQuad/SubViewport" instance=ExtResource("3_7ykc4")]
+
+[node name="Pointer" type="MeshInstance3D" parent="XROrigin3D/OpenXRCompositionLayerQuad"]
+mesh = SubResource("QuadMesh_rt2n2")

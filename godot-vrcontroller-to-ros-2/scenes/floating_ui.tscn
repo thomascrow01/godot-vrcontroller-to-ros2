@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://blfitosl1gxbw"]
+
+[ext_resource type="Script" uid="uid://cjae1dlm8c1fh" path="res://scripts/ip_v_box.gd" id="1_5xriy"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="IPVBox" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_5xriy")
+
+[node name="Label" type="Label" parent="IPVBox"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="IPVBox"]
+layout_mode = 2
+
+[node name="AddressLineEdit" type="LineEdit" parent="IPVBox/HBoxContainer"]
+layout_mode = 2
+text = "localhost"
+placeholder_text = "localhost"
+expand_to_text_length = true
+
+[node name="PortLineEdit" type="LineEdit" parent="IPVBox/HBoxContainer"]
+layout_mode = 2
+text = "9090"
+placeholder_text = "9090"
+expand_to_text_length = true
+
+[connection signal="text_submitted" from="IPVBox/HBoxContainer/AddressLineEdit" to="IPVBox" method="_on_address_line_edit_text_submitted"]
+[connection signal="text_submitted" from="IPVBox/HBoxContainer/PortLineEdit" to="IPVBox" method="_on_port_line_edit_text_submitted"]
