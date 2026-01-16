@@ -11,6 +11,7 @@ func _ready():
 
 func set_new_address(address: String, port: int) -> void:
 	var websocket_url: String = "ws://" + address + ":" + str(port)
+	print(websocket_url)
 	
 	# Initiate connection to the given URL.
 	var err = socket.connect_to_url(websocket_url)
@@ -22,16 +23,29 @@ func set_new_address(address: String, port: int) -> void:
 		while socket.get_ready_state() == WebSocketPeer.STATE_CONNECTING:
 			print(str(socket.get_ready_state()))
 			await get_tree().create_timer(2).timeout
+			
+		
 
 		# Send data.
 		print("sending test packet")
-		socket.send_text("{'op': 'advertise', 'topic': 'godotdata', 'type': 'std_msgs/msg/String'}") #replace with actual json stuff later
+		socket.send_text(JSON.stringify({"op": "advertise",
+						"topic": "/godotdata",
+						"type": "std_msgs/msg/String"}))
+		#print(socket.send_text('{"op": "advertise", "topic": "godotdata", "type": "std_msgs/msg/String"}')) #replace with actual json stuff later
 		set_process(true)
+		#send_data("TEST STRING")
 		
 func send_data(msg: String) -> void:
 	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
 	
-		socket.send_text("{'op': 'advertise', 'topic': 'godotdata', 'msg': '" + msg + "'}")
+		#socket.send_text("{'op': 'advertise', 'topic': 'godotdata', 'msg': '" + msg + "'}")
+		print("TEST SEND DATA")
+		print(JSON.stringify({"op": "publish",
+						"topic": "/godotdata",
+						"msg": {"data": msg}}))
+		print("send data: " + str(socket.send_text(JSON.stringify({"op": "publish",
+						"topic": "/godotdata",
+						"msg": {"data": msg}}))))
 	
 func _process(_delta):
 	# Call this in _process or _physics_process. Data transfer and state updates
@@ -43,8 +57,10 @@ func _process(_delta):
 
 	# WebSocketPeer.STATE_OPEN means the socket is connected and ready
 	# to send and receive data.
+
 	if state == WebSocketPeer.STATE_OPEN:
 		while socket.get_available_packet_count():
+			socket.get_available_packet_count()
 			print("Got data from server: ", socket.get_packet().get_string_from_utf8())
 
 	# WebSocketPeer.STATE_CLOSING means the socket is closing.

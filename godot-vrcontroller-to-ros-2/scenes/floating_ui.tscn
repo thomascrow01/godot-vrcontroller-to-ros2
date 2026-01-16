@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://blfitosl1gxbw"]
+[gd_scene load_steps=3 format=3 uid="uid://blfitosl1gxbw"]
 
 [ext_resource type="Script" uid="uid://cjae1dlm8c1fh" path="res://scripts/ip_v_box.gd" id="1_5xriy"]
+[ext_resource type="Script" uid="uid://c8sc10py4l4bc" path="res://scripts/check_if_pass_through.gd" id="2_jsgul"]
 
 [node name="Control" type="Control"]
+custom_minimum_size = Vector2(512, 512)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -31,6 +33,17 @@ layout_mode = 2
 text = "9090"
 placeholder_text = "9090"
 expand_to_text_length = true
+
+[node name="CheckIfPassThrough" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 239.0
+grow_vertical = 0
+text = "Press A to enable passthrough."
+script = ExtResource("2_jsgul")
 
 [connection signal="text_submitted" from="IPVBox/HBoxContainer/AddressLineEdit" to="IPVBox" method="_on_address_line_edit_text_submitted"]
 [connection signal="text_submitted" from="IPVBox/HBoxContainer/PortLineEdit" to="IPVBox" method="_on_port_line_edit_text_submitted"]
