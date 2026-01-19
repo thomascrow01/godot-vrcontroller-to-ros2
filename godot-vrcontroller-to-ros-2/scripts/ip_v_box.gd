@@ -23,7 +23,9 @@ func _ready() -> void:
 
 func _on_address_line_edit_text_submitted(new_text: String) -> void:
 	current_address = new_text
+	SignalBus.ip_or_port_changed.emit()
 
 
 func _on_port_line_edit_text_submitted(new_text: String) -> void:
 	current_port = int(new_text)
+	SignalBus.ip_or_port_changed.emit()

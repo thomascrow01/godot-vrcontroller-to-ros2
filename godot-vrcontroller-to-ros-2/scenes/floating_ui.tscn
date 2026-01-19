@@ -1,40 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://blfitosl1gxbw"]
+[gd_scene format=3 uid="uid://blfitosl1gxbw"]
 
 [ext_resource type="Script" uid="uid://cjae1dlm8c1fh" path="res://scripts/ip_v_box.gd" id="1_5xriy"]
 [ext_resource type="Script" uid="uid://c8sc10py4l4bc" path="res://scripts/check_if_pass_through.gd" id="2_jsgul"]
 
-[node name="Control" type="Control"]
+[node name="Control" type="Control" unique_id=897844786]
 custom_minimum_size = Vector2(512, 512)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="IPVBox" type="VBoxContainer" parent="."]
+[node name="IPVBox" type="VBoxContainer" parent="." unique_id=523796]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_5xriy")
 
-[node name="Label" type="Label" parent="IPVBox"]
+[node name="Label" type="Label" parent="IPVBox" unique_id=372635270]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="IPVBox"]
+[node name="HBoxContainer" type="HBoxContainer" parent="IPVBox" unique_id=1389420206]
 layout_mode = 2
 
-[node name="AddressLineEdit" type="LineEdit" parent="IPVBox/HBoxContainer"]
+[node name="AddressLineEdit" type="LineEdit" parent="IPVBox/HBoxContainer" unique_id=640054510]
 layout_mode = 2
 text = "localhost"
 placeholder_text = "localhost"
 expand_to_text_length = true
 
-[node name="PortLineEdit" type="LineEdit" parent="IPVBox/HBoxContainer"]
+[node name="PortLineEdit" type="LineEdit" parent="IPVBox/HBoxContainer" unique_id=1005095680]
 layout_mode = 2
 text = "9090"
 placeholder_text = "9090"
 expand_to_text_length = true
 
-[node name="CheckIfPassThrough" type="Label" parent="."]
+[node name="CheckIfPassThrough" type="Label" parent="." unique_id=203750982]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0

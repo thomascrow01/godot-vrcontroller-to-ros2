@@ -8,6 +8,8 @@ const NO_INTERSECTION = Vector2(-1.0, -1.0)
 var was_pressed : bool = false
 var was_intersect : Vector2 = NO_INTERSECTION
 
+@onready var sub_viewport: SubViewport = get_node("SubViewport")
+
 func _intersect_to_global_pos(intersect : Vector2) -> Vector3:
 	if intersect != NO_INTERSECTION:
 		var local_pos : Vector2 = (intersect - Vector2(0.5, 0.5)) * quad_size
@@ -22,6 +24,9 @@ func _intersect_to_viewport_pos(intersect : Vector2) -> Vector2i:
 	else:
 		return Vector2i(-1, -1)
 		
+func _unhandled_key_input(event: InputEvent) -> void:
+	sub_viewport.push_input(event)
+
 func _process(_delta):
 	# Hide our pointer, we'll make it visible if we're interacting with the viewport.
 	$Pointer.visible = false
@@ -57,11 +62,12 @@ func _process(_delta):
 				event.position = _intersect_to_viewport_pos(intersect)
 				layer_viewport.push_input(event)
 				
-			if not is_pressed and was_pressed:
-				# Button was let go?
+			elif is_pressed and not was_pressed:
+				# Button was pressed?
 				var event : InputEventMouseButton = InputEventMouseButton.new()
 				event.button_index = MOUSE_BUTTON_LEFT
-				event.pressed = false
+				event.button_mask = MOUSE_BUTTON_MASK_LEFT
+				event.pressed = true
 				event.position = _intersect_to_viewport_pos(intersect)
 				layer_viewport.push_input(event)
 				
