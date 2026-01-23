@@ -24,11 +24,9 @@ func _ready() -> void:
 	
 	config = ConfigFile.new()
 	if config.load(CONFIG_PATH) == OK and config.get_sections().has(CONFIG_SECTION):
-		print("config found")
 		address_line_edit.text = config.get_value(CONFIG_SECTION, "address")
 		port_line_edit.text = str(config.get_value(CONFIG_SECTION, "port"))
 	else:
-		print("config not found")
 		config.set_value(CONFIG_SECTION, "address", address_line_edit.text)
 		config.set_value(CONFIG_SECTION, "port", int(port_line_edit.text))
 		config.save(CONFIG_PATH)

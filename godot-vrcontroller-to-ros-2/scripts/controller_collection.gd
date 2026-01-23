@@ -48,6 +48,8 @@ func _process(_delta: float) -> void: # I'll look into the OpenXr actions later
 	if is_button_pressed("grip"): # still need to check the correct controller
 		
 		var acceleration: Vector3
+		if !get_pose():
+			return
 		var linear_velocity: Vector3 = get_pose().linear_velocity
 		
 		velocities.append(linear_velocity)
