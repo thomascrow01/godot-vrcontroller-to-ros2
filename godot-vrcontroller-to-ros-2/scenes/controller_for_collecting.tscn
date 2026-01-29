@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://cxdr3q00p82r2"]
+
+[ext_resource type="Script" uid="uid://dhurx2kdxkses" path="res://scripts/controller_collection.gd" id="1_wjgcd"]
+
+[node name="ControllerForCollecting" type="XRController3D" unique_id=59776965 node_paths=PackedStringArray("acceleration_text", "velocity_text", "position_text", "rotation_text")]
+tracker = &"right_hand"
+script = ExtResource("1_wjgcd")
+acceleration_text = NodePath("AccelerationLabel3D")
+velocity_text = NodePath("VelocityLabel3D")
+position_text = NodePath("PositionLabel3D")
+rotation_text = NodePath("RotationLabel3D")
+
+[node name="AccelerationLabel3D" type="Label3D" parent="." unique_id=1552432170]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11740267, 0)
+pixel_size = 0.0003
+text = "DISPLAY_ACCELERATION"
+
+[node name="VelocityLabel3D" type="Label3D" parent="." unique_id=1592313378]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.097, 0)
+pixel_size = 0.0003
+text = "DISPLAY_VELOCITY"
+
+[node name="PositionLabel3D" type="Label3D" parent="." unique_id=2052806625]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.077, 0)
+pixel_size = 0.0003
+text = "DISPLAY_POSITION"
+
+[node name="RotationLabel3D" type="Label3D" parent="." unique_id=1596839181]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.057, 0)
+pixel_size = 0.0003
+text = "DISPLAY_ROTATION"
+
+[connection signal="button_pressed" from="." to="." method="_on_button_pressed"]

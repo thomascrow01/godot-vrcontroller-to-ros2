@@ -2,10 +2,10 @@ extends XRController3D
 
 @export var disabled: bool = false
 
-@export var acceleration_text: MeshInstance3D
-@export var velocity_text: MeshInstance3D
-@export var position_text: MeshInstance3D
-@export var rotation_text: MeshInstance3D
+@export var acceleration_text: Label3D
+@export var velocity_text: Label3D
+@export var position_text: Label3D
+@export var rotation_text: Label3D
 @onready var websocket_manager: WebsocketManger = get_node("../WebsocketManager")
 
 var last_timestamps: Array[float] # in unix time
@@ -48,6 +48,8 @@ func _process(_delta: float) -> void: # I'll look into the OpenXr actions later
 	if is_button_pressed("grip"): # still need to check the correct controller
 		
 		var acceleration: Vector3
+		if !get_pose():
+			return
 		var linear_velocity: Vector3 = get_pose().linear_velocity
 		
 		velocities.append(linear_velocity)
@@ -74,23 +76,24 @@ func _process(_delta: float) -> void: # I'll look into the OpenXr actions later
 			#
 			#acceleration = average_velocity / (Time.get_unix_time_from_system() - last_timestamp)
 		
-		if acceleration_text and acceleration_text.mesh is TextMesh and acceleration:
-			acceleration_text.mesh.text = '"Acceleration" ' + str(acceleration)
+		if acceleration_text and acceleration:
+			acceleration_text.text = tr("DISPLAY_ACCELERATION") + ' ' + str(acceleration)
 		
-		if velocity_text and velocity_text.mesh is TextMesh:
-			velocity_text.mesh.text = "Velocity " + str(linear_velocity)
+		if velocity_text:
+			velocity_text.text = tr("DISPLAY_VELOCITY") + ' ' + str(linear_velocity)
 		
 		#print(global_position)
-		if position_text and position_text.mesh is TextMesh:
-			position_text.mesh.text = "Position " + str(global_position)
+		if position_text:
+			position_text.text = tr("DISPLAY_POSITION") + ' ' + str(global_position)
 			
 		#print(global_basis.get_rotation_quaternion())
-		if rotation_text and rotation_text.mesh is TextMesh:
-			rotation_text.mesh.text = "Rotation " + str(global_basis.get_rotation_quaternion())
+		if rotation_text:
+			rotation_text.text = tr("DISPLAY_ROTATION") + ' ' + str(global_basis.get_rotation_quaternion())
 
 		
 		if acceleration:
-			websocket_manager.send_data(JSON.stringify({"data": {"time": Time.get_unix_time_from_system(),
+			websocket_manager.send_data(JSON.stringify({"data": {"tracker": tracker,
+																"time": Time.get_unix_time_from_system(),
 																"position": global_position,
 																"rotation": global_basis.get_rotation_quaternion(),
 																"velocity": linear_velocity,

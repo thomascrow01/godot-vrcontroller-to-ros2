@@ -1,8 +1,11 @@
 keys,en
 DISPLAY_POSITION,Position
 DISPLAY_ROTATION,Rotation
+DISPLAY_VELOCITY,Velocity
+DISPLAY_ACCELERATION,Acceleration
 MENU_TOGGLE_PASSTHROUGH,Toggle passthrough
 MENU_ADDRESS,Address/IP
 MENU_PORT,Port
 MENU_FAILED_WEBSOCKET,Failed to connect to websocket
 MENU_SUCCESS_WEBSOCKET,Connected to websocket
+MENU_CONNECTING_WEBSOCKET,Connecting

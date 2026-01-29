@@ -3,13 +3,17 @@ class_name WebsocketManger extends Node
 var socket = WebSocketPeer.new()
 
 func _ready():
+	_new_address()
+	SignalBus.ip_or_port_changed.connect(_new_address)
+
+func _new_address() -> void:
+	set_process(true)
 	var ip_vbox: IPVBox = get_node("../OpenXRCompositionLayerQuad/SubViewport/Control/IPVBox")
-	#var websocket_url = "wss://echo.websocket.org"
-	
 	set_new_address(ip_vbox.current_address, ip_vbox.current_port)
 
-
 func set_new_address(address: String, port: int) -> void:
+	socket.close()
+	
 	var websocket_url: String = "ws://" + address + ":" + str(port)
 	print(websocket_url)
 	
@@ -21,7 +25,8 @@ func set_new_address(address: String, port: int) -> void:
 	else:
 		# Wait for the socket to connect.
 		while socket.get_ready_state() == WebSocketPeer.STATE_CONNECTING:
-			print(str(socket.get_ready_state()))
+			print("Connecting")
+			print(socket.get_requested_url())
 			await get_tree().create_timer(2).timeout
 			
 		
