@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://blfitosl1gxbw"]
 
 [ext_resource type="Script" uid="uid://cjae1dlm8c1fh" path="res://scripts/ip_v_box.gd" id="1_5xriy"]
+[ext_resource type="Script" uid="uid://0hot7dhq8lop" path="res://scenes/fps_counter.gd" id="2_5t4xu"]
 [ext_resource type="Script" uid="uid://c8sc10py4l4bc" path="res://scripts/check_if_pass_through.gd" id="2_jsgul"]
 
 [node name="Control" type="Control" unique_id=897844786]
@@ -33,6 +34,11 @@ layout_mode = 2
 text = "9090"
 placeholder_text = "9090"
 expand_to_text_length = true
+
+[node name="Label2" type="Label" parent="IPVBox" unique_id=1202309476]
+layout_mode = 2
+text = "fps"
+script = ExtResource("2_5t4xu")
 
 [node name="CheckIfPassThrough" type="Label" parent="." unique_id=203750982]
 layout_mode = 1

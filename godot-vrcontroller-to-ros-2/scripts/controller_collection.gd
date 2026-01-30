@@ -52,13 +52,13 @@ func _process(_delta: float) -> void: # I'll look into the OpenXr actions later
 			return
 		var linear_velocity: Vector3 = get_pose().linear_velocity
 		
-		velocities.append(linear_velocity)
-		last_timestamps.append(Time.get_unix_time_from_system())
-		
-		if velocities.size() >= 4:
-			acceleration = get_acceleration(velocities, last_timestamps)
-			velocities.clear()
-			last_timestamps.clear()
+		#velocities.append(linear_velocity)
+		#last_timestamps.append(Time.get_unix_time_from_system())
+		#
+		#if velocities.size() >= 4:
+			#acceleration = get_acceleration(velocities, last_timestamps)
+			#velocities.clear()
+			#last_timestamps.clear()
 		
 		#
 		#if velocities.size() == 0:
@@ -98,6 +98,12 @@ func _process(_delta: float) -> void: # I'll look into the OpenXr actions later
 																"rotation": global_basis.get_rotation_quaternion(),
 																"velocity": linear_velocity,
 																"acceleration": acceleration}}))
+		else:
+			websocket_manager.send_data(JSON.stringify({"data": {"tracker": tracker,
+																"time": Time.get_unix_time_from_system(),
+																"position": global_position,
+																"rotation": global_basis.get_rotation_quaternion(),
+																"velocity": linear_velocity}}))
 		
 
 
