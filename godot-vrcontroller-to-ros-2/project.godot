@@ -27,6 +27,10 @@ XRToolsUserSettings="*uid://bqgb8i74tm0t"
 XRToolsRumbleManager="*uid://by853dk86g1qw"
 SignalBus="*uid://86dv553blbnl"
 
+[display]
+
+window/size/transparent=true
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg")
