@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://blfitosl1gxbw" path="res://scenes/floating_ui.tscn" id="3_7ykc4"]
 [ext_resource type="PackedScene" uid="uid://cxdr3q00p82r2" path="res://scenes/controller_for_collecting.tscn" id="3_rt2n2"]
 [ext_resource type="Script" uid="uid://bliy04wn2fstv" path="res://scripts/websocket_manager.gd" id="5_gubc5"]
+[ext_resource type="Texture2D" uid="uid://6nrqpflq3o5b" path="res://circle_mask.svg" id="5_rt2n2"]
 [ext_resource type="Script" uid="uid://b3mvuc63alvl6" path="res://scripts/ip_ui.gd" id="6_rt2n2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w2twt"]
@@ -23,7 +24,14 @@ font_size = 5
 text = "Right hand"
 font_size = 5
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c16ls"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("5_rt2n2")
+
 [sub_resource type="QuadMesh" id="QuadMesh_rt2n2"]
+material = SubResource("StandardMaterial3D_c16ls")
 size = Vector2(0.025, 0.025)
 
 [node name="Node3D" type="Node3D" unique_id=1134558544]
@@ -56,7 +64,7 @@ mesh = SubResource("TextMesh_gubc5")
 skeleton = NodePath("")
 
 [node name="OpenXRCompositionLayerQuad" type="OpenXRCompositionLayerQuad" parent="XROrigin3D" unique_id=2035324059 node_paths=PackedStringArray("layer_viewport", "controller")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.932)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2720947, -0.932)
 layer_viewport = NodePath("SubViewport")
 alpha_blend = true
 script = ExtResource("6_rt2n2")
