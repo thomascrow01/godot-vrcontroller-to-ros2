@@ -51,6 +51,8 @@ func _process(_delta: float) -> void: # I'll look into the OpenXr actions later
 		if !get_pose():
 			return
 		var linear_velocity: Vector3 = get_pose().linear_velocity
+		var angular_velocity: Vector3 = get_pose().angular_velocity
+		var confidence: XRPose.TrackingConfidence = get_pose().tracking_confidence
 		
 		#velocities.append(linear_velocity)
 		#last_timestamps.append(Time.get_unix_time_from_system())
@@ -91,19 +93,22 @@ func _process(_delta: float) -> void: # I'll look into the OpenXr actions later
 			rotation_text.text = tr("DISPLAY_ROTATION") + ' ' + str(global_basis.get_rotation_quaternion())
 
 		
-		if acceleration:
-			websocket_manager.send_data(JSON.stringify({"data": {"tracker": tracker,
-																"time": Time.get_unix_time_from_system(),
-																"position": global_position,
-																"rotation": global_basis.get_rotation_quaternion(),
-																"velocity": linear_velocity,
-																"acceleration": acceleration}}))
-		else:
-			websocket_manager.send_data(JSON.stringify({"data": {"tracker": tracker,
-																"time": Time.get_unix_time_from_system(),
-																"position": global_position,
-																"rotation": global_basis.get_rotation_quaternion(),
-																"velocity": linear_velocity}}))
+		#if acceleration:
+			#websocket_manager.send_data(JSON.stringify({"data": {"tracker": tracker,
+																#"time": Time.get_unix_time_from_system(),
+																#"position": global_position,
+																#"rotation": global_basis.get_rotation_quaternion(),
+																#"velocity": linear_velocity,
+																#"acceleration": acceleration}}))
+		#else:
+		websocket_manager.send_data(JSON.stringify({"data": {"tracker": tracker,
+															"time": Time.get_unix_time_from_system(),
+															"position": global_position,
+															"rotation": global_basis.get_rotation_quaternion(),
+															"velocity": linear_velocity,
+															"angular_velocity": angular_velocity,
+															"tracking_confidence": confidence,
+															"fps": Engine.get_frames_per_second()}}))
 		
 
 
