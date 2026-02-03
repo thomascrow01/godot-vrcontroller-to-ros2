@@ -102,7 +102,7 @@ func _process(_delta: float) -> void: # I'll look into the OpenXr actions later
 																#"acceleration": acceleration}}))
 		#else:
 		websocket_manager.send_data(JSON.stringify({"data": {"tracker": tracker,
-															"time": Time.get_unix_time_from_system(),
+															"time": Time.get_unix_time_from_system() - 0.03,
 															"position": global_position,
 															"rotation": global_basis.get_rotation_quaternion(),
 															"velocity": linear_velocity,
