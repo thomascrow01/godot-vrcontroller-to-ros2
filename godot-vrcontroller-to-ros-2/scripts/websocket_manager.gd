@@ -39,6 +39,15 @@ func set_new_address(address: String, port: int) -> void:
 						"topic": "/godotdata",
 						"type": "std_msgs/msg/String"}))
 		#print(socket.send_text('{"op": "advertise", "topic": "godotdata", "type": "std_msgs/msg/String"}')) #replace with actual json stuff later
+		
+		# android sensor data topics
+		socket.send_text(JSON.stringify({"op": "advertise",
+						"topic": "/godotdata/imu",
+						"type": "sensor_msgs/msg/Imu"}))
+		socket.send_text(JSON.stringify({"op": "advertise",
+						"topic": "/godotdata/magnetic_field",
+						"type": "sensor_msg/msg/MagneticField"}))
+		
 		set_process(true)
 		ip_vbox.label.text = tr("MENU_SUCCESS_WEBSOCKET") # yes I know I should probably confirm this
 		
@@ -53,6 +62,14 @@ func send_data(msg: String) -> void:
 		print("send data: " + str(socket.send_text(JSON.stringify({"op": "publish",
 						"topic": "/godotdata",
 						"msg": {"data": msg}}))))
+
+func send_data_imu() -> void:
+	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
+		pass
+	
+func send_data_magnetic() -> void:
+	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
+		pass
 	
 func _process(_delta):
 	# Call this in _process or _physics_process. Data transfer and state updates

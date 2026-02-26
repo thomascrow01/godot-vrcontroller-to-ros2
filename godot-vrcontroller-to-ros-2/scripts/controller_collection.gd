@@ -3,13 +3,22 @@ extends XRController3D
 @export var disabled: bool = false
 
 @export var acceleration_text: Label3D
-@export var velocity_text: Label3D
+@export var linear_velocity_text: Label3D
+@export var angular_velocity_text: Label3D
 @export var position_text: Label3D
 @export var rotation_text: Label3D
 @onready var websocket_manager: WebsocketManger = get_node("../WebsocketManager")
 
+var toggled_on: bool = false
+
 var last_timestamps: Array[float] # in unix time
 var velocities: Array[Vector3]
+
+func _ready() -> void:
+	SignalBus.toggle_all_trackers.connect(_toggle)
+
+func _toggle(value: bool) -> void:
+	toggled_on = value
 
 func get_acceleration(v: Array[Vector3], times: Array[float]) -> Vector3:
 	
@@ -45,7 +54,7 @@ func _process(_delta: float) -> void: # I'll look into the OpenXr actions later
 	if disabled:
 		return
 		
-	if is_button_pressed("grip"): # still need to check the correct controller
+	if is_button_pressed("grip") or toggled_on: # still need to check the correct controller
 		
 		var acceleration: Vector3
 		if !get_pose():
@@ -81,8 +90,11 @@ func _process(_delta: float) -> void: # I'll look into the OpenXr actions later
 		if acceleration_text and acceleration:
 			acceleration_text.text = tr("DISPLAY_ACCELERATION") + ' ' + str(acceleration)
 		
-		if velocity_text:
-			velocity_text.text = tr("DISPLAY_VELOCITY") + ' ' + str(linear_velocity)
+		if linear_velocity_text:
+			linear_velocity_text.text = tr("DISPLAY_LINEAR_VELOCITY") + ' ' + str(linear_velocity)
+			
+		if linear_velocity_text:
+			angular_velocity_text.text = tr("DISPLAY_ANGULAR_VELOCITY") + ' ' + str(angular_velocity)
 		
 		#print(global_position)
 		if position_text:
@@ -102,7 +114,7 @@ func _process(_delta: float) -> void: # I'll look into the OpenXr actions later
 																#"acceleration": acceleration}}))
 		#else:
 		websocket_manager.send_data(JSON.stringify({"data": {"tracker": tracker,
-															"time": Time.get_unix_time_from_system() - 0.03,
+															"time": Time.get_unix_time_from_system() - 0.03, # refer to the custom build of godot in the openxr api
 															"position": global_position,
 															"rotation": global_basis.get_rotation_quaternion(),
 															"velocity": linear_velocity,
@@ -110,12 +122,28 @@ func _process(_delta: float) -> void: # I'll look into the OpenXr actions later
 															"tracking_confidence": confidence,
 															"fps": Engine.get_frames_per_second()}}))
 		
+		# android sensor data will be sent 
+		if tracker == "head" and OS.has_feature("android"):
+			# need to see if it's enabled, otherwise we will get Vector3.ZERO
+			if ProjectSettings.get_setting("input_devices/sensors/enable_accelerometer"):
+				print("accelerometer " + str(Input.get_accelerometer()))
+			if ProjectSettings.get_setting("input_devices/sensors/enable_gravity"):
+				print("gravity " + str(Input.get_gravity()))
+			if ProjectSettings.get_setting("input_devices/sensors/enable_gyroscope"):
+				print("gyroscope " + str(Input.get_gyroscope()))
+			if ProjectSettings.get_setting("input_devices/sensors/enable_magnetometer"):
+				print("magnometer " + str(Input.get_magnetometer()))
 
 
 func _on_button_pressed(button_name: String) -> void:
+	if button_name == "by_button":
+		toggled_on = !toggled_on
+	
 	var xr_server: XRInterface = XRServer.get_interface(0)
 	if button_name == "ax_button" and xr_server.is_passthrough_supported():
 		if !xr_server.is_passthrough_enabled():
 			xr_server.start_passthrough()
 		else:
 			xr_server.stop_passthrough()
+	else:
+		xr_server.environment_blend_mode = XRInterface.XR_ENV_BLEND_MODE_ALPHA_BLEND

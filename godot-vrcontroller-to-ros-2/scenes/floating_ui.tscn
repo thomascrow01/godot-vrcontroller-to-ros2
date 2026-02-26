@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cjae1dlm8c1fh" path="res://scripts/ip_v_box.gd" id="1_5xriy"]
 [ext_resource type="Script" uid="uid://0hot7dhq8lop" path="res://scenes/fps_counter.gd" id="2_5t4xu"]
-[ext_resource type="Script" uid="uid://c8sc10py4l4bc" path="res://scripts/check_if_pass_through.gd" id="2_jsgul"]
+[ext_resource type="Script" uid="uid://cjjmeo5v84sxq" path="res://scripts/toggle_all_trackers.gd" id="3_5t4xu"]
 
 [node name="Control" type="Control" unique_id=897844786]
 custom_minimum_size = Vector2(512, 512)
@@ -40,16 +40,11 @@ layout_mode = 2
 text = "fps"
 script = ExtResource("2_5t4xu")
 
-[node name="CheckIfPassThrough" type="Label" parent="." unique_id=203750982]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -23.0
-offset_right = 239.0
-grow_vertical = 0
-text = "MENU_TOGGLE_PASSTHROUGH"
-script = ExtResource("2_jsgul")
+[node name="ToggleAllTrackersButton" type="Button" parent="IPVBox" unique_id=784590180]
+layout_mode = 2
+toggle_mode = true
+text = "MENU_TOGGLE_ALL"
+script = ExtResource("3_5t4xu")
 
 [connection signal="text_submitted" from="IPVBox/HBoxContainer/AddressLineEdit" to="IPVBox" method="_on_address_line_edit_text_submitted"]
 [connection signal="text_submitted" from="IPVBox/HBoxContainer/PortLineEdit" to="IPVBox" method="_on_port_line_edit_text_submitted"]

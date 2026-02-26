@@ -35,6 +35,13 @@ window/size/transparent=true
 
 enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg")
 
+[input_devices]
+
+sensors/enable_accelerometer=true
+sensors/enable_gravity=true
+sensors/enable_gyroscope=true
+sensors/enable_magnetometer=true
+
 [internationalization]
 
 locale/translations=PackedStringArray("res://localisation/localisation.en.translation")
@@ -48,6 +55,12 @@ textures/vram_compression/import_etc2_astc=true
 [xr]
 
 openxr/enabled=true
+openxr/environment_blend_mode=2
+openxr/extensions/spatial_entity/enabled=true
+openxr/extensions/spatial_entity/enable_marker_tracking=true
+openxr/extensions/spatial_entity/enable_builtin_marker_tracking=true
+openxr/extensions/spatial_entity/aruco_dict=0
 shaders/enabled=true
 openxr/extensions/meta/color_space/starting_color_space=3
 openxr/extensions/meta/passthrough=true
+openxr/extensions/meta/render_model=true

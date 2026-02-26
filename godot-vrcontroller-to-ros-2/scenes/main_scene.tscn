@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://7xpy6evjgmmv"]
 
 [ext_resource type="Script" uid="uid://ck6grtv5cm3px" path="res://scripts/world.gd" id="1_w2twt"]
+[ext_resource type="Script" uid="uid://dhurx2kdxkses" path="res://scripts/controller_collection.gd" id="2_c16ls"]
 [ext_resource type="PackedScene" uid="uid://blfitosl1gxbw" path="res://scenes/floating_ui.tscn" id="3_7ykc4"]
 [ext_resource type="PackedScene" uid="uid://cxdr3q00p82r2" path="res://scenes/controller_for_collecting.tscn" id="3_rt2n2"]
 [ext_resource type="Script" uid="uid://bliy04wn2fstv" path="res://scripts/websocket_manager.gd" id="5_gubc5"]
@@ -45,6 +46,10 @@ transform = Transform3D(0.9708589, 0.23499723, 0.047004003, 0, -0.19613443, 0.98
 
 [node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=1063117632]
 current = true
+
+[node name="HeadTracker" type="XRController3D" parent="XROrigin3D" unique_id=1978636343]
+tracker = &"head"
+script = ExtResource("2_c16ls")
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=1943596392]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)

@@ -1,8 +1,10 @@
 keys,en
 DISPLAY_POSITION,Position
 DISPLAY_ROTATION,Rotation
-DISPLAY_VELOCITY,Velocity
+DISPLAY_LINEAR_VELOCITY,Linear velocity
+DISPLAY_ANGULAR_VELOCITY,Angular velocity
 DISPLAY_ACCELERATION,Acceleration
+MENU_TOGGLE_ALL,Toggle all trackers $state
 MENU_TOGGLE_PASSTHROUGH,Press A to enable passthrough
 MENU_PASSTHROUGH_UNSUPPORTED,Passthrough unsupported
 MENU_ADDRESS,Address/IP
