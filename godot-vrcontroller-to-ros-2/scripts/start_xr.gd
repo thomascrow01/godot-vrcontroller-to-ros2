@@ -91,7 +91,8 @@ func _on_openxr_visible_state() -> void:
 		xr_is_focussed = false
 
 		# pause our game
-		process_mode = Node.PROCESS_MODE_DISABLED
+		#process_mode = Node.PROCESS_MODE_DISABLED
+		# The meta quest overlay keyboard being brought up actually cases xr focuss to be lost so pausing will actually prevent the lineedits from being edited
 
 		emit_signal("focus_lost")
 
